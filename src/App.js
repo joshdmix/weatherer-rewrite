@@ -8,14 +8,20 @@ const octaves = ["0", "1", "2", "3", "4", "5", "6", "7", "8"]
 let tones = notes.map(note => octaves.map(octave => `${note}${octave}`))
 const tonesTotal = []
 octaves.forEach(octave => tones.forEach(noteArr => (tonesTotal.push(noteArr[octave]))))
+let color = "white"
 
 const App = () => {
 	return (
 	<>
-					<ul style={{ listStyleType: "none", margin: 0, padding: 0 }}>
-		  {tonesTotal.map((tone) =>
-							<li><button onClick={() => invokeTone(tone)}>{tone}</button></li>
-       )}
+    <ul style={{ listStyleType: "none", margin: 0, padding: 0 }}>
+									{tonesTotal.map(tone =>
+													<li style={{ float: "left"}}>
+																				 <button
+																								 style={{backgroundColor: tone.includes("b") ? "black": "white"}}
+																								 onClick={() => invokeTone(tone)}>{tone}
+																				 </button>
+																 </li>
+								  )}
      </ul>
 	</>
 	)
