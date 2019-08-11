@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import Tone from 'tone';
+import Grid from './grid';
 
-const App = () => {
+const Keyboard = () => {
   const notes = [
     'C',
     'Db',
@@ -49,6 +50,10 @@ const App = () => {
     oscillator: {type: oscType, modulationFrequency: modFreq},
   }).toMaster();
 
+  const metalSynth = new Tone.MetalSynth({
+    oscillator: {type: oscType, modulationFrequency: modFreq},
+  }).toMaster();
+
   const invokeTone = (tone, noteLength) => {
     synthType === 'membrane'
       ? membraneSynth.triggerAttackRelease(tone, noteLength)
@@ -56,7 +61,7 @@ const App = () => {
   };
 
   return (
-	  <>
+    <>
       {octaveSpliceArr.map(startValue => {
         return [
           <ul style={{listStyle: 'none', height: '120px'}}>
@@ -74,6 +79,56 @@ const App = () => {
           </ul>,
         ];
       })}
+    </>
+  );
+};
+
+const App = () => {
+  const [view, setView] = useState('keys');
+
+  const viewSwitch = view => {
+    switch (view) {
+      case 'keys':
+        return <Keyboard />;
+      case 'grid':
+        return <Grid />;
+      case 'info':
+        return <div>Info</div>;
+      default:
+        return <div>Error</div>;
+    }
+  };
+
+  const handleChangeView = e => setView(e.target.value);
+
+  return (
+    <>
+      <form>
+        <div>
+          <label>
+		  <input type="radio" value="keys" checked={view === "keys"} onChange={e => handleChangeView(e)} />
+            Keys
+          </label>
+        </div>
+        <div>
+          <label>
+		  <input type="radio" value="grid" checked={view === "grid"}
+		  onChange={e => handleChangeView(e)}
+		  />
+            Grid
+          </label>
+        </div>
+        <div>
+          <label>
+		  <input type="radio" value="info" checked={view === "info"} 
+		  onChange={e => handleChangeView(e)}
+		  />
+            Info
+          </label>
+        </div>
+      </form>
+
+      {viewSwitch(view)}
     </>
   );
 };
