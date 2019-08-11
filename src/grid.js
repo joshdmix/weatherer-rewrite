@@ -8,24 +8,32 @@ import React from 'react';
 //   });
 // };
 //
-const columns = [...Array(16).keys()];
-const rows = [...Array(88).keys()];
+const columns = [...Array(32).keys()];
+const rows = [...Array(24).keys()];
 
-const Grid = () => {
+const Grid = ({tonesTotal}) => {
+  console.log(tonesTotal);
   return (
-    <table>
-      <tbody>
-        {rows.map((row, i) => {
-          return (
-            <tr>
-              {columns.map((column, i) => {
-                return <td>x{row[column]}</td>;
-              })}
-            </tr>
-          );
-        })}
-      </tbody>
-    </table>
+    <div style={{backgroundColor: 'black'}}>
+      <table style={{margin: 'auto'}}>
+        <tbody>
+          {tonesTotal.map((tone, i) => {
+            return (
+              <tr>
+		      <td style={{color: "white"}}>{tone}</td>
+                {columns.map((column, i) => {
+                  return (
+                    <td>
+			    <button style={{backgroundColor: 'blue', height: "20px", width: "20px"}}></button>
+                    </td>
+                  );
+                })}
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
   );
 };
 
