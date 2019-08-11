@@ -37,18 +37,26 @@ const App = () => {
   const changeNoteLength = note => {};
   const [oscType, setOscType] = useState('triangle');
   const [modFreq, setModFreq] = useState('0.3');
+  const [synthType, setSynthType] = useState('membrane');
   // const changeOsc = oscType => {
   //   oscType === 'pwm' ? setOscType('square') : setOscType('pwm');
   // };
   const synth = new Tone.Synth({
     oscillator: {type: oscType, modulationFrequency: modFreq},
   }).toMaster();
+
+  const membraneSynth = new Tone.MembraneSynth({
+    oscillator: {type: oscType, modulationFrequency: modFreq},
+  }).toMaster();
+
   const invokeTone = (tone, noteLength) => {
-    synth.triggerAttackRelease(tone, noteLength);
+    synthType === 'membrane'
+      ? membraneSynth.triggerAttackRelease(tone, noteLength)
+      : synth.triggerAttackRelease(tone, noteLength);
   };
 
   return (
-    <>
+	  <>
       {octaveSpliceArr.map(startValue => {
         return [
           <ul style={{listStyle: 'none', height: '120px'}}>
